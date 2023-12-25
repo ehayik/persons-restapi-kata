@@ -1,9 +1,13 @@
-package org.github.ehayik.kata.persons;
+package org.github.ehayik.kata.persons.infrastructure.adapter.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.github.ehayik.kata.persons.infrastructure.adapter.persistence.PersonEntityFactory.DEFAULT_PERSON_ID;
+import static org.github.ehayik.kata.persons.infrastructure.adapter.persistence.PersonEntityFactory.createDefaultPerson;
 
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.junit.jupiter.Container;
@@ -13,7 +17,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
 @Testcontainers
-class ApplicationTests {
+class PersistenceIT {
 
     @Container
     @ServiceConnection
@@ -24,9 +28,19 @@ class ApplicationTests {
             .withUsername("PERSONS_DB")
             .withPassword("Lider0ne");
 
+    @Autowired
+    private TestEntityManager testEntityManager;
+
     @Test
-    void connectionEstablished() {
-        assertThat(oracle.isCreated()).isTrue();
-        assertThat(oracle.isRunning()).isTrue();
+    void shouldPersistPersonEntity() {
+        // Given
+        var person = createDefaultPerson();
+
+        // When
+        person = testEntityManager.persist(person);
+        testEntityManager.flush();
+
+        // Then
+        assertThat(person.getId()).isEqualTo(DEFAULT_PERSON_ID);
     }
 }
