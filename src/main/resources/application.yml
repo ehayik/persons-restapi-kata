@@ -4,5 +4,3 @@ spring:
     url: "jdbc:oracle:thin:@localhost/FREEPDB1"
     username: "PERSONS_DB"
     password: "Lider0ne"
-  liquibase:
-    enabled: false
