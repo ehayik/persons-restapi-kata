@@ -1,12 +1,10 @@
 package org.github.ehayik.kata.persons.infrastructure.adapter.persistence;
 
-import lombok.NoArgsConstructor;
-import org.github.ehayik.kata.persons.application.domain.Gender;
-
+import static lombok.AccessLevel.PACKAGE;
 
 import java.time.LocalDate;
-
-import static lombok.AccessLevel.PACKAGE;
+import lombok.NoArgsConstructor;
+import org.github.ehayik.kata.persons.application.domain.Gender;
 
 @NoArgsConstructor(access = PACKAGE)
 class PersonEntityFactory {
@@ -17,6 +15,7 @@ class PersonEntityFactory {
         var address = new AddressEntity()
                 .setStreet("517 Stark Rapid")
                 .setBuildingNumber("74653")
+                .setCountry("Zimbabwe")
                 .setCity("Stephaniaberg")
                 .setZipCode("Zimbabwe");
         return new PersonEntity()

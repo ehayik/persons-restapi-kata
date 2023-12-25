@@ -1,16 +1,17 @@
 package org.github.ehayik.kata.persons.infrastructure.adapter.persistence;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
+import static org.hibernate.annotations.SourceType.DB;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.ToString.Include;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.RowId;
@@ -56,13 +57,13 @@ class AddressEntity {
     @Column(name = "ZIP_CODE", nullable = false, length = 20)
     private String zipCode;
 
-    @NotNull
-    @CreationTimestamp
+    @Include
+    @CreationTimestamp(source = DB)
     @Column(name = "CREATED_ON", nullable = false, updatable = false)
     private LocalDateTime createdOn;
 
-    @NotNull
-    @UpdateTimestamp
+    @Include
+    @UpdateTimestamp(source = DB)
     @Column(name = "LAST_UPDATED_ON", nullable = false)
     private LocalDateTime lastUpdatedOn;
 

@@ -1,8 +1,10 @@
 package org.github.ehayik.kata.persons.infrastructure.adapter.persistence;
 
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 import static org.hibernate.annotations.OnDeleteAction.RESTRICT;
+import static org.hibernate.annotations.SourceType.DB;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -57,7 +59,6 @@ class PersonEntity {
 
     @Include
     @NotNull
-    @Size(max = 1)
     @Enumerated
     @Column(name = "GENDER", nullable = false)
     private Gender gender;
@@ -73,14 +74,12 @@ class PersonEntity {
     private String email;
 
     @Include
-    @NotNull
-    @CreationTimestamp
+    @CreationTimestamp(source = DB)
     @Column(name = "CREATED_ON", nullable = false, updatable = false)
     private LocalDateTime createdOn;
 
     @Include
-    @NotNull
-    @UpdateTimestamp
+    @UpdateTimestamp(source = DB)
     @Column(name = "LAST_UPDATED_ON", nullable = false)
     private LocalDateTime lastUpdatedOn;
 
@@ -89,7 +88,7 @@ class PersonEntity {
      * @see <a href="https://vladmihalcea.com/jpa-entity-graph">Jpa Entity Graph</a>
      * */
     @NotNull
-    @ManyToOne(fetch = LAZY, optional = false)
+    @ManyToOne(fetch = LAZY, cascade = PERSIST, optional = false)
     @OnDelete(action = RESTRICT)
     @JoinColumn(name = "ADDRESS_ID", nullable = false)
     private AddressEntity address;
