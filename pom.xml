@@ -176,10 +176,14 @@
                     </java>
                     <yaml>
                         <includes>
-                            <include>**/*.yml</include>
+                            <include>src/**/*.yml</include>
                             <include>src/**/*.yaml</include>
                         </includes>
-                        <jackson/>
+                        <jackson>
+                            <features>
+                                <INDENT_OUTPUT>false</INDENT_OUTPUT>
+                            </features>
+                        </jackson>
                     </yaml>
                 </configuration>
                 <executions>
