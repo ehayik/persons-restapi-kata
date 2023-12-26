@@ -24,6 +24,8 @@
         <oracle-free.version>1.19.3</oracle-free.version>
         <commons-compress.version>1.24.0</commons-compress.version>
         <equalsverifier.version>3.15.5</equalsverifier.version>
+        <datasource-proxy-spring-boot-starter.version>1.9.1</datasource-proxy-spring-boot-starter.version>
+        <flexy-pool-spring-boot-starter.version>1.9.0</flexy-pool-spring-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -83,6 +85,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.gavlyukovskiy</groupId>
+            <artifactId>datasource-proxy-spring-boot-starter</artifactId>
+            <version>${datasource-proxy-spring-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.gavlyukovskiy</groupId>
+            <artifactId>flexy-pool-spring-boot-starter</artifactId>
+            <version>${flexy-pool-spring-boot-starter.version}</version>
         </dependency>
 
         <dependency>
