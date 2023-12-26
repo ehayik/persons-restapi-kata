@@ -1,7 +1,7 @@
 ---
 spring:
   datasource:
-    url: "jdbc:oracle:thin:@192.168.100.78/FREEPDB1"
+    url: "jdbc:oracle:thin:@localhost/FREEPDB1"
     username: "PERSONS_DB"
     password: "Lider0ne"
   jpa:
@@ -20,9 +20,6 @@ spring:
           batch_versioned_data: true
         order_inserts: true
         order_updates: true
-  docker:
-    compose:
-      enabled: false
 decorator:
   datasource:
     datasource-proxy:
