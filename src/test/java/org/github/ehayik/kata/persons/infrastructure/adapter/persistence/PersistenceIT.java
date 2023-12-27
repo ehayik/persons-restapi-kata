@@ -1,25 +1,21 @@
 package org.github.ehayik.kata.persons.infrastructure.adapter.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.github.ehayik.kata.persons.infrastructure.adapter.persistence.PersonEntityFactory.DEFAULT_PERSON_ID;
 import static org.github.ehayik.kata.persons.infrastructure.adapter.persistence.PersonEntityFactory.createDefaultPerson;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@DataJpaTest
 @Testcontainers
-@AutoConfigureTestDatabase(replace = NONE)
+@SpringBootTest
 class PersistenceIT {
 
     @Container
@@ -40,10 +36,10 @@ class PersistenceIT {
         var person = createDefaultPerson();
 
         // When
-        person = repository.save(person);
+        person = repository.saveAndFlush(person);
 
         // Then
-        assertThat(person.getId()).isEqualTo(DEFAULT_PERSON_ID);
+        assertThat(person.getId()).isNotZero();
         assertThat(person.getCreatedOn().toLocalDate()).isEqualTo(LocalDate.now());
         assertThat(person.getLastUpdatedOn().toLocalDate()).isEqualTo(LocalDate.now());
     }
@@ -51,7 +47,7 @@ class PersistenceIT {
     @Test
     void shouldCreatePersonEntityRevision() {
         // Given
-        var person = repository.save(createDefaultPerson());
+        var person = repository.saveAndFlush(createDefaultPerson());
 
         // When
         var revisions = repository.findRevisions(person.getId());
