@@ -16,10 +16,12 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.RowId;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Getter
 @Setter
+@Audited
 @ToString
 @RowId("ROWID")
 @Accessors(chain = true)

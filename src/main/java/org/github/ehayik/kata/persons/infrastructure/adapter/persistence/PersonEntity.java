@@ -23,10 +23,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.RowId;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 @Getter
 @Setter
 @Entity
+@Audited
 @RowId("ROWID")
 @Table(name = "PERSONS")
 @Accessors(chain = true)

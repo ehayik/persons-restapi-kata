@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -33,7 +32,7 @@ class PersistenceIT {
             .withPassword("Lider0ne");
 
     @Autowired
-    private TestEntityManager testEntityManager;
+    private PersonEntityRepository repository;
 
     @Test
     void shouldPersistPersonEntity() {
@@ -41,12 +40,23 @@ class PersistenceIT {
         var person = createDefaultPerson();
 
         // When
-        person = testEntityManager.persist(person);
-        testEntityManager.flush();
+        person = repository.save(person);
 
         // Then
         assertThat(person.getId()).isEqualTo(DEFAULT_PERSON_ID);
         assertThat(person.getCreatedOn().toLocalDate()).isEqualTo(LocalDate.now());
         assertThat(person.getLastUpdatedOn().toLocalDate()).isEqualTo(LocalDate.now());
+    }
+
+    @Test
+    void shouldCreatePersonEntityRevision() {
+        // Given
+        var person = repository.save(createDefaultPerson());
+
+        // When
+        var revisions = repository.findRevisions(person.getId());
+
+        // Then
+        assertThat(revisions).hasSize(1);
     }
 }

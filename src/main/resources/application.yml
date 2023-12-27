@@ -20,6 +20,14 @@ spring:
           batch_versioned_data: true
         order_inserts: true
         order_updates: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: "_AUDIT_LOG"
+            audit_strategy: "org.hibernate.envers.strategy.internal.ValidityAuditStrategy"
+            audit_strategy_validity_end_rev_field_name: "REVISION_NUMBER_END"
+            revision_type_field_name: "REVISION_TYPE"
+            revision_field_name: "REVISION_NUMBER_START"
 decorator:
   datasource:
     datasource-proxy:
