@@ -1,6 +1,7 @@
 package org.github.ehayik.kata.persons.infrastructure.adapter.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.github.ehayik.kata.persons.fixtures.verifies.Verifications.verifyThat;
 import static org.github.ehayik.kata.persons.infrastructure.adapter.persistence.PersonEntityFactory.createDefaultPerson;
 
 import java.time.Duration;
@@ -54,5 +55,14 @@ class PersistenceIT {
 
         // Then
         assertThat(revisions).hasSize(1);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenEmailIsDuplicated() {
+        // Given
+        var person = repository.saveAndFlush(createDefaultPerson());
+
+        // Then
+        verifyThat(() -> repository.saveAndFlush(person)).shouldThrowRuntimeException("ss");
     }
 }

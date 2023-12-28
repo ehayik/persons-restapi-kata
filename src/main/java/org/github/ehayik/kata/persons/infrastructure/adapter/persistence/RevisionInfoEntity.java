@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.RowId;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
@@ -14,6 +15,7 @@ import org.hibernate.envers.RevisionTimestamp;
 @Setter
 @Entity
 @ToString
+@RowId("ROWID")
 @RevisionEntity
 @Table(name = "AUDIT_REVISIONS_LOG")
 class RevisionInfoEntity {

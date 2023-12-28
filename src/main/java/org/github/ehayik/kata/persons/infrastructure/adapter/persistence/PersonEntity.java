@@ -7,6 +7,7 @@ import static org.hibernate.annotations.OnDeleteAction.RESTRICT;
 import static org.hibernate.annotations.SourceType.DB;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,10 +20,7 @@ import lombok.ToString;
 import lombok.ToString.Include;
 import lombok.experimental.Accessors;
 import org.github.ehayik.kata.persons.application.domain.Gender;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.RowId;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 import org.hibernate.envers.Audited;
 
 @Getter
@@ -71,7 +69,9 @@ class PersonEntity {
     private String phone;
 
     @Include
+    @NotBlank
     @Size(max = 50)
+    @NaturalId(mutable = true)
     @Column(name = "EMAIL", nullable = false, length = 50)
     private String email;
 
@@ -98,11 +98,11 @@ class PersonEntity {
     @Override
     public final boolean equals(Object obj) {
         if (this == obj) return true;
-        return (obj instanceof PersonEntity other) && Objects.equals(getId(), other.getId());
+        return (obj instanceof PersonEntity other) && Objects.equals(getEmail(), other.getEmail());
     }
 
     @Override
     public final int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(email);
     }
 }

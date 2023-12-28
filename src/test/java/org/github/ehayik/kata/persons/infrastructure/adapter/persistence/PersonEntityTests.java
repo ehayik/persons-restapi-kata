@@ -10,7 +10,7 @@ class PersonEntityTests {
     @Test
     void shouldMeetEqualsAndHashCodeContract() {
         EqualsVerifier.forClass(PersonEntity.class)
-                .suppress(ALL_FIELDS_SHOULD_BE_USED, STRICT_HASHCODE)
+                .suppress(ALL_FIELDS_SHOULD_BE_USED)
                 .verify();
     }
 }

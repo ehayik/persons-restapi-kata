@@ -32,7 +32,7 @@ class AddressEntity {
     @GeneratedValue(strategy = SEQUENCE, generator = "ADDRESSES_id_gen")
     @SequenceGenerator(name = "ADDRESSES_id_gen", sequenceName = "ADDRESS_SEQ", allocationSize = 1)
     @Column(name = "ADDRESS_ID", nullable = false)
-    private Integer id;
+    private Long id;
 
     @NotBlank
     @Size(max = 250)
